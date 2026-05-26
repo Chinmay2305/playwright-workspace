@@ -1,0 +1,15 @@
+{
+  "name": "student-ai-automation",
+  "version": "1.0.0",
+  "description": "Playwright-based end-to-end automation framework (POM) for student-devcode site",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "private": true
+}

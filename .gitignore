@@ -1,0 +1,50 @@
+# =========================
+# IDE Files
+# =========================
+.idea/
+.metadata/
+.settings/
+.project
+.classpath
+.vscode/
+
+# =========================
+# Java / Maven / Gradle
+# =========================
+bin/
+target/
+build/
+out/
+.gradle/
+
+# Compiled Java classes
+*.class
+
+# Logs
+*.log
+
+# =========================
+# Node.js / Playwright
+# =========================
+node_modules/
+playwright-report/
+test-results/
+blob-report/
+
+# Playwright browsers cache
+.playwright/
+
+# =========================
+# OS Files
+# =========================
+Thumbs.db
+.DS_Store
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+
+# Nested/Broken Git Repo
+AI-AERFIN-Projects/

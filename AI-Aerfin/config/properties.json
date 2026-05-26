@@ -1,0 +1,18 @@
+{
+  "baseUrl": "https://qa.aerfinity.acumenaviation.in/",
+  "loginUrl": "https://qa.aerfinity.acumenaviation.in/",
+  "inventoriesUrl": "https://qa.aerfinity.acumenaviation.in/inventory/inventories",
+  "email": "support@acumen.aero",
+  "password": "Acumen@123",
+  "locators": {
+    "login": {
+      "email": "//input[@id='email']",
+      "password": "//input[contains(@id,'password')]",
+      "submit": "button[type='submit']"
+    },
+    "inventories": {
+      "table": "table"
+    }
+  }
+}
+
