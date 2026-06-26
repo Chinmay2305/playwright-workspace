@@ -3,9 +3,7 @@ const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
-
   timeout: 30000,
-
   expect: {
     timeout: 5000,
   },
@@ -16,9 +14,9 @@ module.exports = defineConfig({
   browserName: "chromium",
   channel: "chrome",
   headless: false,
-
   screenshot: 'on',
-  trace: 'retain-on-failure', //- this will give tracing only for failing tests 
+  trace: 'on', 
+  //trace:'retain-on-failure'- this will give tracing only for failing tests 
   //trace: 'on', //this will give tracing for all tests, regardless of failures or passing
 
   viewport: {
