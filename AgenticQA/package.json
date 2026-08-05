@@ -3,15 +3,25 @@
   "version": "1.0.0",
   "description": "An Agentic AI-powered QA Automation Platform.",
   "main": "index.js",
+  "type": "module",
+
   "scripts": {
-  "dev": "tsx src/main.ts",
-  "build": "tsc",
-  "start": "node dist/main.js"
-},
+    "dev": "tsx src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "uuid": "^14.0.1",
+    "winston": "^3.19.0",
+    "yaml": "^2.9.0"
+  },
+
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.2",
@@ -21,12 +31,7 @@
     "tsx": "^4.23.7",
     "typescript": "^7.0.2"
   },
-  "dependencies": {
-    "dotenv": "^17.4.2",
-    "uuid": "^14.0.1",
-    "winston": "^3.19.0",
-    "yaml": "^2.9.0"
-  },
+
   "directories": {
     "test": "tests"
   }

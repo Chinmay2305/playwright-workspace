@@ -13,7 +13,7 @@ export class SkillResult<T = unknown> {
         return new SkillResult<T>(true, data);
     }
 
-    static fail(message: string): SkillResult<unknown> {
-        return new SkillResult(false, undefined, message);
+    static fail<T>(message: string): SkillResult<T> {
+        return new SkillResult<T>(false, undefined as T, message);
     }
 }

@@ -11,9 +11,7 @@ export class BrowserFactory {
                 return new PlaywrightBrowserAdapter();
 
             default:
-                throw new Error(`Browser ${browser} is not supported.`);
+                throw new Error(`Browser '${browser}' is not supported.`);
         }
-
     }
-
 }

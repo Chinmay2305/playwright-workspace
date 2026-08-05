@@ -1,22 +1,17 @@
-export interface AppConfig {
-    browser: string;
-    headless: boolean;
-    timeout: number;
-}
+import fs from "fs";
+import yaml from "yaml";
+import type { AppConfiguration } from "../models/AppConfiguration.js";
 
 export class ConfigurationManager {
 
-    public static load(): AppConfig {
+    static load(): AppConfiguration {
 
-        return {
+        const file = fs.readFileSync(
+            "configs/default.yaml",
+            "utf8"
+        );
 
-            browser: "chromium",
-
-            headless: false,
-
-            timeout: 30000
-
-        };
+        return yaml.parse(file);
 
     }
 

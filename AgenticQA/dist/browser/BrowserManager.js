@@ -3,11 +3,20 @@ import { logger } from "../utils/Logger.js";
 export class BrowserManager {
     adapter;
     constructor(config) {
-        this.adapter = BrowserFactory.create(config.browser);
+        this.adapter = BrowserFactory.create(config.browser.type);
     }
     async launch(headless) {
         logger.info("Browser Manager starting browser...");
-        return await this.adapter.launch(headless);
+        await this.adapter.launch(headless);
+    }
+    getBrowser() {
+        return this.adapter.getBrowser();
+    }
+    getContext() {
+        return this.adapter.getContext();
+    }
+    getPage() {
+        return this.adapter.getPage();
     }
     async close() {
         await this.adapter.close();

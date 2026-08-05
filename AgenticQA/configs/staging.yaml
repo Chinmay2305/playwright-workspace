@@ -1,0 +1,28 @@
+application:
+  name: OrangeHRM
+
+  url: https://opensource-demo.orangehrmlive.com
+
+browser:
+  type: chromium
+
+  headless: false
+
+  timeout: 30000
+
+credentials:
+  username: Admin
+
+  password: admin123
+
+execution:
+  retries: 2
+
+  screenshotOnFailure: true
+
+  video: true
+
+  trace: true
+
+logging:
+  level: info

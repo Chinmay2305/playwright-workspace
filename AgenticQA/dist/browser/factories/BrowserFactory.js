@@ -5,7 +5,7 @@ export class BrowserFactory {
             case "chromium":
                 return new PlaywrightBrowserAdapter();
             default:
-                throw new Error(`Browser ${browser} is not supported.`);
+                throw new Error(`Browser '${browser}' is not supported.`);
         }
     }
 }

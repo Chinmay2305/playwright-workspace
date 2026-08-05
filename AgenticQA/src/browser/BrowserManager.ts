@@ -1,29 +1,37 @@
 import { BrowserFactory } from "./factories/BrowserFactory.js";
-import type { AppConfig } from "../config/ConfigurationManager.js";
+import type { IBrowserAdapter } from "./interfaces/IBrowserAdapter.js";
+import type { AppConfiguration } from "../models/AppConfiguration.js";
 import { logger } from "../utils/Logger.js";
 
 export class BrowserManager {
 
-    private adapter;
+    private readonly adapter: IBrowserAdapter;
 
-    constructor(config: AppConfig) {
-
-        this.adapter = BrowserFactory.create(config.browser);
-
+    constructor(config: AppConfiguration) {
+        this.adapter = BrowserFactory.create(config.browser.type);
     }
 
-    async launch(headless: boolean) {
+    async launch(headless: boolean): Promise<void> {
 
         logger.info("Browser Manager starting browser...");
 
-        return await this.adapter.launch(headless);
-
+        await this.adapter.launch(headless);
     }
 
-    async close() {
+    getBrowser() {
+        return this.adapter.getBrowser();
+    }
 
+    getContext() {
+        return this.adapter.getContext();
+    }
+
+    getPage() {
+        return this.adapter.getPage();
+    }
+
+    async close(): Promise<void> {
         await this.adapter.close();
-
     }
 
 }

@@ -1,10 +1,9 @@
+import fs from "fs";
+import yaml from "yaml";
 export class ConfigurationManager {
     static load() {
-        return {
-            browser: "chromium",
-            headless: false,
-            timeout: 30000
-        };
+        const file = fs.readFileSync("config/default.yaml", "utf8");
+        return yaml.parse(file);
     }
 }
 //# sourceMappingURL=ConfigurationManager.js.map

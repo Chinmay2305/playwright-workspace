@@ -1,0 +1,22 @@
+application:
+  name: Example Application
+  url: https://www.acumen.aero/
+
+environment:
+  name: QA
+
+browser:
+  type: chromium
+  headless: false
+  timeout: 30000
+
+credentials:
+  username:
+  password:
+
+crawler:
+  maxDepth: 3
+  sameDomainOnly: true
+
+reporting:
+  outputFolder: reports
