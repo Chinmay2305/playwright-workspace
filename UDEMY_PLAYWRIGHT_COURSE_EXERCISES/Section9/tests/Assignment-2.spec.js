@@ -1,123 +1,182 @@
-const {test, expect} = require('@playwright/test'); //we are importing test here
+const { test, expect } = require('@playwright/test');
+test.setTimeout(120000);
 
-test('Section9-Assignment2',async ({page})=>
-{
-    test.setTimeout(120000);
-    /*REQUIREMENT: 2 seperate tests
-    Book 1 ticket - It should show "Eligible for refund"
-    Book 3 tickets - It should show "Not eligible for refund"
-    Verify the spinner appears and disappears before showing the message*/
+/*REQUIREMENT:
+ 2 seperate tests 
+ Book 1 ticket - It should show "Eligible for refund" 
+ Book 3 tickets - It should show "Not eligible for refund" 
+ Verify the spinner appears and disappears before showing the message*/
 
-    //data for testing
-    const url = 'https://eventhub.rahulshettyacademy.com';
-    const email = page.getByPlaceholder('you@email.com');
-    const password = page.getByLabel('password')
-    const dataemail = 'chinmay230587@gmail.com';
-    const datapassword = 'Chinmay5345&';
-    const signinbtn = page.locator("//button[contains(@id,'login-btn')]");
-    const admindd = page.locator("(//div[contains(@class,'md:flex')]/div/button)[1]");
-    const adminevents = page.locator("(//div[contains(@class,'absolute')])[1]/a[1]");
-    const currentDateTime = new Date().toISOString().slice(0, 16);
-    
-    const titlefield = page.locator("//input[contains(@id,'event-title-input')]");
-    const title = "1-3 seats?"+currentDateTime;
-    const descfield = page.locator("(//form[contains(@id,'admin-event-form')]/div/div)[2]/textarea");
-    const desc = "Description testing";
-    const cityfield = page.locator("//input[@id=//label[text()='City']/@for]");
-    const city = "Nashik";
-    const venuefield = page.locator("//input[contains(@id,'venue')]");
-    const venue = "Test Auditorium, 1-B, Vrundavan Park, Sama Road";
-    const datetimefield = page.locator("//input[contains(@id,'event-date-&-time')]");
-    const datetime = "2026-06-01T20:40";
-    const pricefield = page.locator("//input[contains(@id,'price-($)')]");
-    const price = "5000";
-    const totalseatsfield = page.locator("//input[contains(@id,'total-seats')]");
-    const totalseats = "10";
-    const addbutton = page.locator("//form/div[contains(@class,'flex items-center')]/button");
+// ============================================================================
+// Test Data
+// ============================================================================
 
-    const events = page.locator("(//div[contains(@class,'hidden md:flex items-center gap-1')])/a[2]");
+const BASE_URL = 'https://eventhub.rahulshettyacademy.com';
 
-    //STEP 1 - login
-    await page.goto(url);
-    await email.fill(dataemail);
-    await password.fill(datapassword);
-    await signinbtn.click();
-    await expect(page.locator("((//div[contains(@class,'sm:flex-row')])[1]/a)[1]/span")).toHaveText('Browse Events →');
+const USER = {
+    email: 'chinmay230587@gmail.com',
+    password: 'Chinmay5345&',
+    fullName: 'Chinmay Agrawal',
+    phone: '8238997664'
+};
 
-    //STEP 2 - add event
-    await admindd.click();
-    await adminevents.click();
-    await titlefield.fill(title);
-    await descfield.fill(desc);
-    await cityfield.fill(city);
-    await venuefield.fill(venue);
-    await datetimefield.fill(datetime);
-    await pricefield.fill(price);
-    await totalseatsfield.fill(totalseats);
-    await addbutton.click();
+const EVENT = {
+    description: 'Description testing',
+    city: 'Nashik',
+    venue: 'Test Auditorium',
+    date: '2027-06-01T20:40',
+    price: '500',
+    totalSeats: '10'
+};
 
-    //STEP 3 - get seats count
-    await events.click();
+// ============================================================================
+// Helper Methods
+// ============================================================================
 
-    //STEP 4 - do 2 bookings - 1 seat and 3 seats
-    const addticketbutton = page.locator("(//form[contains(@class,'space-y-4')]/div/div/button)[2]");
-    const fullname = page.locator("(//input)[1]");
-    const bookingemail = page.locator("(//input)[2]");
-    const phone = page.locator("(//input)[3]");
-    const confirmbookingbtn = page.locator("//form[contains(@class,'space-y-4')]/button");
-    const dataname = "Chinmay Agrawal";
-    const dataphone = "8238997664";
+async function login(page) {
 
-    for(let i=1;i<=2;i++)
-    {
-        const bookbutton = page.locator(`//div[contains(@class,'flex-col')][.//h3[text()='${title}']]//a[@data-testid='book-now-btn']`);
+    await page.goto(`${BASE_URL}/login`);
 
-        await bookbutton.click();
-        await expect(confirmbookingbtn).toBeVisible();
-        if(i===2)
-        {
-            for(let j=1;j<=2;j++)
-            {
-                await addticketbutton.click();
-            }
-        }
-        await fullname.fill(dataname);
-        await bookingemail.fill(dataemail);
-        await phone.fill(dataphone);
-        await confirmbookingbtn.click();
-        await expect(page.getByText('Booking Confirmed! 🎉')).toBeVisible();
+    await page.getByPlaceholder('you@email.com').fill(USER.email);
+    await page.getByLabel('Password').fill(USER.password);
+    await page.locator('#login-btn').click();
 
-        //STEP 5 - Check elgibility for refund
-        const mybookings = page.locator("(//div[contains(@class,'hidden md:flex items-center gap-1')])/a[3]");
-        await mybookings.click();
-        const viewdetails = page.locator("(//div[contains(@class,'flex-wrap')])[3]/a/button");
-        await viewdetails.click();
-        
-        const numberofticketsbooked = page.locator("((//div[contains(@class,'space-y-4')]/div)[3]/div/div[1]/span)[2]");
-        await expect(numberofticketsbooked).toBeVisible();
-        const ticketscount = parseInt((await numberofticketsbooked.textContent()).match(/\d+/)[0]);
- 
-        const refund = page.locator("(//div[contains(@class,'space-y-4')]/div)[4]/button");
-        const spinner = page.locator("//div[contains(@id,'refund-spinner')]");
-        const refundmessage = page.locator("//div[contains(@id,'refund-result')]/span");
-        await refund.click();
-        await spinner.waitFor({ state: 'visible' });
-        await spinner.waitFor({ state: 'hidden' });
-
-        if(i===1)
-        {
-            await expect(refundmessage).toHaveText('Eligible for refund. Single-ticket bookings qualify for a full refund.');
-        }
-        else if(ticketscount===3)
-        {
-            await expect(refundmessage).toHaveText('Not eligible for refund. Group bookings (3 tickets) are non-refundable.');
-        }
-
-        if(i<2)
-        {
-            //await page.getByRole('button', { name: 'Browse More Events' }).click();
-            await page.goto('https://eventhub.rahulshettyacademy.com/events');
-        }
-    }            
+//    await expect(page.getByText('Browse Events')).toBeVisible();
 }
-);
+
+async function createEvent(page, eventTitle) {
+
+    await page.goto(`${BASE_URL}/admin/events`);
+
+    await page.locator('#event-title-input').fill(eventTitle);
+
+    await page.locator('#admin-event-form textarea').fill(EVENT.description);
+
+    await page.getByLabel('City').fill(EVENT.city);
+
+    await page.getByLabel('Venue').fill(EVENT.venue);
+
+    await page.getByLabel('Event Date & Time')
+        .fill(EVENT.date);
+
+    await page.getByLabel('Price ($)')
+        .fill(EVENT.price);
+
+    await page.getByLabel('Total Seats')
+        .fill(EVENT.totalSeats);
+
+    await page.locator('#add-event-btn').click();
+    await page.pause();
+
+    await expect(page.getByText('Event created!')).toBeVisible();
+}
+
+async function openCreatedEvent(page, eventTitle) {
+
+    await page.goto(`${BASE_URL}/events`);
+
+    const eventCard = page
+        .getByTestId('event-card')
+        .filter({ hasText: eventTitle });
+
+    await expect(eventCard).toBeVisible();
+
+    await eventCard.getByTestId('book-now-btn').click();
+}
+
+async function bookTickets(page, ticketCount) {
+
+    const plusButton = page.locator('(//button[@type="button"])[2]');
+
+    for (let i = 1; i < ticketCount; i++) {
+        await plusButton.click();
+    }
+
+    await page.getByLabel('Full Name').fill(USER.fullName);
+
+    await page.locator('#customer-email').fill(USER.email);
+
+    await page.getByPlaceholder('+91 98765 43210')
+        .fill(USER.phone);
+
+    await page.locator('.confirm-booking-btn').click();
+
+    await expect(page.getByText('Booking Confirmed! 🎉')).toBeVisible();
+}
+
+async function verifyRefund(page, expectedMessage) {
+
+    await page.getByRole('link', {
+        name: 'View My Bookings'
+    }).click();
+
+    await page.getByRole('button', {
+        name: 'View Details'
+    }).first().click();
+
+    const refundButton = page.getByRole('button', {
+        name: /refund/i
+    });
+
+    const spinner = page.locator('#refund-spinner');
+
+    const result = page.locator('#refund-result span');
+
+    await refundButton.click();
+
+    // Spinner should appear
+
+    await expect(spinner).toBeVisible();
+
+    // Spinner should disappear
+
+    await expect(spinner).toBeHidden();
+
+    // Refund message
+
+    await expect(result).toHaveText(expectedMessage);
+}
+
+// ============================================================================
+// Test 1
+// ============================================================================
+
+test('Book 1 ticket - Eligible for refund', async ({ page }) => {
+
+    const eventTitle = `Refund Test ${Date.now()}`;
+
+    await login(page);
+
+    await createEvent(page, eventTitle);
+
+    await openCreatedEvent(page, eventTitle);
+
+    await bookTickets(page, 1);
+
+    await verifyRefund(
+        page,
+        'Eligible for refund. Single-ticket bookings qualify for a full refund.'
+    );
+});
+
+// ============================================================================
+// Test 2
+// ============================================================================
+
+test('Book 3 tickets - Not eligible for refund', async ({ page }) => {
+
+    const eventTitle = `Refund Test ${Date.now()}`;
+
+    await login(page);
+
+    await createEvent(page, eventTitle);
+
+    await openCreatedEvent(page, eventTitle);
+
+    await bookTickets(page, 3);
+
+    await verifyRefund(
+        page,
+        'Not eligible for refund. Group bookings (3 tickets) are non-refundable.'
+    );
+});

@@ -91,11 +91,11 @@ test('Section9-Assignment1',async ({page})=>
         const venuefield = page.locator("//input[contains(@id,'venue')]");
         const venue = "Test Auditorium, 1-B, Vrundavan Park, Sama Road";
         const datetimefield = page.locator("//input[contains(@id,'event-date-&-time')]");
-        const datetime = "2026-06-01T20:40";
+        const datetime = "2027-06-01T20:40";
         const pricefield = page.locator("//input[contains(@id,'price-($)')]");
         const price = "5000";
         const totalseatsfield = page.locator("//input[contains(@id,'total-seats')]");
-        const totalseats = "5";
+        const totalseats = "100";
         const addbutton = page.locator("//form/div[contains(@class,'flex items-center')]/button");
 
         const events = page.locator("(//div[contains(@class,'hidden md:flex items-center gap-1')])/a[2]");
@@ -121,6 +121,7 @@ test('Section9-Assignment1',async ({page})=>
 
         //STEP 3 - get seats count
         await events.click();
+        await page.waitForLoadState('networkidle');
         const eventscount = await page.locator("(//div[contains(@class,'absolute top-3 left-3')])").count();
         await console.log(eventscount);
 

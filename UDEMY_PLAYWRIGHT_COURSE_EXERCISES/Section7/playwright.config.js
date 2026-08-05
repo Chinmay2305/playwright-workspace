@@ -4,8 +4,8 @@ const { defineConfig } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests',
 
-  timeout: 30000,
-
+//Maximum time 1 test can run on
+  timeout: 30*1000,
   expect: {
     timeout: 5000,
   },
@@ -15,7 +15,9 @@ module.exports = defineConfig({
   use: {
     browserName: "chromium",
     channel: "chrome",
-    headless: false,
+    headless: true,
+    screenshot: 'on',
+    actionTimeout: 10*1000,
 
     viewport: {
       width: 1920,

@@ -11,8 +11,8 @@ module.exports = defineConfig({
   reporter: [['html', { open: 'always' }]],
 
   use: {
-  browserName: "chromium",
-  channel: "chrome",
+  browserName: 'chromium',
+  channel: 'chrome',
   headless: false,
   screenshot: 'on',
   trace: 'on', 

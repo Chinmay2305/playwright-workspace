@@ -12,3 +12,7 @@ test('Playwright Special Locators',async({page})=>
     await page.getByRole()
 }
 )
+
+//Run with the command npx playwright test 48-Inspector_Debugging.spec.js --debug
+//This will open the inspector window with running window. Use it to run at own pace 
+// and see where error is coming or find any element locator

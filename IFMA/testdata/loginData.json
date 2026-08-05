@@ -1,0 +1,40 @@
+{
+    "validLogin": {
+        "username": "ank@yopmail.com",
+        "password": "ank@yopmail.com",
+        "role": "Organization User",
+        "cards": ["Access SAT"]
+    },
+
+    "validAdminLogin": {
+        "username": "viren.desai@theopeneyes.in",
+        "password": "OpenEyes@2024",
+        "role": "IFMA Administrator",
+        "cards": ["Access Connector","Access SAT","Access Administration"]
+    },
+
+    "wrongUsername": {
+        "username": "abc",
+        "password": "ank@yopmail.com"
+    },
+
+    "wrongPassword": {
+        "username": "ank@yopmail.com",
+        "password": "xyz"
+    },
+
+    "emptyUsername": {
+        "username": "",
+        "password": "ank@yopmail.com"
+    },
+
+    "emptyPassword": {
+        "username": "ank@yopmail.com",
+        "password": ""
+    },
+
+    "emptyCredentials": {
+        "username": "",
+        "password": ""
+    }
+}
