@@ -1,28 +1,28 @@
 import { ConfigurationManager } from "./config/ConfigurationManager.js";
 import { BrowserManager } from "./browser/BrowserManager.js";
 import { logger } from "./utils/Logger.js";
-
+import { TestDataLoader } from "./loaders/TestDataLoader.js";
 import { ExecutionContext } from "./core/ExecutionContext.js";
-
 import { OpenUrlSkill } from "./skills/browser/OpenUrlSkill.js";
 import { DiscoveryAgent } from "./agents/DiscoveryAgent.js";
+import { LoginSkill } from "./skills/authentication/LoginSkill.js";
 
-async function main(): Promise<void> {
-
+async function main(): Promise<void>
+{
     logger.info("AgenticQA Started");
-
     const config = ConfigurationManager.load();
+    const validUsers = TestDataLoader.loadJson("src/data/ifma-users.json");
+    console.log("===== VALID USERS =====");
+    console.log(validUsers);
+    const negativeTests = TestDataLoader.loadJson("src/data/login-negative.json");
+    
+    console.log("===== NEGATIVE LOGIN TESTS =====");
+    console.log(negativeTests);
 
+    //BrowserManager
     const browserManager = new BrowserManager(config);
-
-    await browserManager.launch(
-        config.browser.headless
-    );
-
-    const context = new ExecutionContext(
-        config,
-        browserManager
-    );
+    await browserManager.launch(config.browser.headless);
+    const context = new ExecutionContext(config,browserManager);
 
     //------------------------------------
     // Open Website
@@ -36,6 +36,18 @@ async function main(): Promise<void> {
         },
         context
     );
+
+    const loginSkill = new LoginSkill();
+
+    const admin = validUsers.validUsers[0];
+
+await loginSkill.execute(
+    {
+        username: admin.username,
+        password: admin.password
+    },
+    context
+);
 
     if (!result.success) {
 

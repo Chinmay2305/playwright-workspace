@@ -1,0 +1,19 @@
+{
+  "validUsers": [
+    {
+      "role": "IFMA Admin",
+      "username": "viren.desai@theopeneyes.in",
+      "password": "OpenEyes@2024"
+    },
+    {
+      "role": "User",
+      "username": "firstuser@yopmail.com",
+      "password": "firstuser@yopmail.com"
+    },
+    {
+      "role": "Cohort",
+      "username": "firstcohort@yopmail.com",
+      "password": "firstcohort@yopmail.com"
+    }
+  ]
+}

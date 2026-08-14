@@ -1,6 +1,6 @@
 application:
-  name: Example Application
-  url: https://www.acumen.aero/
+  name: IFMA
+  url: https://admin.ifma-qa.devbyopeneyes.com
 
 environment:
   name: QA

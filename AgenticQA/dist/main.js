@@ -1,12 +1,20 @@
 import { ConfigurationManager } from "./config/ConfigurationManager.js";
 import { BrowserManager } from "./browser/BrowserManager.js";
 import { logger } from "./utils/Logger.js";
+import { TestDataLoader } from "./loaders/TestDataLoader.js";
 import { ExecutionContext } from "./core/ExecutionContext.js";
 import { OpenUrlSkill } from "./skills/browser/OpenUrlSkill.js";
 import { DiscoveryAgent } from "./agents/DiscoveryAgent.js";
 async function main() {
     logger.info("AgenticQA Started");
     const config = ConfigurationManager.load();
+    const validUsers = TestDataLoader.loadJson("src/data/ifma-users.json");
+    console.log("===== VALID USERS =====");
+    console.log(validUsers);
+    const negativeTests = TestDataLoader.loadJson("src/data/login-negative.json");
+    console.log("===== NEGATIVE LOGIN TESTS =====");
+    console.log(negativeTests);
+    //BrowserManager
     const browserManager = new BrowserManager(config);
     await browserManager.launch(config.browser.headless);
     const context = new ExecutionContext(config, browserManager);
